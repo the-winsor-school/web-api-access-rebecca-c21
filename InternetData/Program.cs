@@ -7,6 +7,8 @@ namespace InternetData
 {
     class MainClass
     {
+        protected static readonly string key = "4814ff966292830a43761b77aefe1545";
+        
         public static void Main(string[] args)
         {
             HttpClient client = new HttpClient();

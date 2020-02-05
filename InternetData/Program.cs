@@ -7,9 +7,7 @@ namespace InternetData
 {
     class MainClass
     {
-        protected static readonly string key = "4814ff966292830a43761b77aefe1545";
-        
-        public static void Main(string[] args)
+        public static void GetRonSwansonQuotes()
         {
             HttpClient client = new HttpClient();
 
@@ -31,13 +29,13 @@ namespace InternetData
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<string>));
 
             // Make sure the response is actually there and not a failed request.
-            if(response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
                 // Read the data from the response message.  The result is an Object that is converted into a List<string> type.
                 List<string> quotes = (List<string>)serializer.ReadObject(response.Content.ReadAsStreamAsync().Result);
 
                 // Print each of the quotes!
-                foreach(string quote in quotes)
+                foreach (string quote in quotes)
                 {
                     Console.WriteLine(quote);
                 }
@@ -52,6 +50,14 @@ namespace InternetData
                 // print the status code for the failure.  see https://http.cat for interpretations
                 Console.WriteLine("Failed!  Status Code: {0}", response.StatusCode);
             }
+        }
+
+
+        public static void Main(string[] args)
+        {
+            WeatherForcast forcast = Weather.GetWeatherForcast();
+
+            Console.WriteLine(forcast.currently.summary);
 
             Console.WriteLine("\nDone!");
         }

@@ -75,7 +75,7 @@ namespace InternetData
 
         public override string ToString()
         {
-            return string.Format("{0} {1} - {2}\nHigh:  {3} ({4})\nLow:  {5} ({6})",
+            return string.Format("{0} {1} - {2}\nHigh:  {3}F ({4})\nLow:  {5}F ({6})",
                 currently.Time.ToLongDateString(), currently.Time.ToShortTimeString(), currently.summary,
                 daily.data[0].temperatureHigh, daily.data[0].HighTemperatureTime.ToShortTimeString(),
                 daily.data[0].temperatureLow, daily.data[0].LowTemperatureTime.ToShortTimeString());

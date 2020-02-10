@@ -50,6 +50,12 @@ namespace InternetData
 
         #region Methods
 
+        /// <summary>
+        /// This override of the built in ToString method lets me program what happens when you include an instance
+        /// of this class in a Console.WriteLine(example) statement.  Console.Write method's automatically call this
+        /// ToString() method to decide what to display.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return string.Format("Name: {0}\nContact:\n\t{1}\nClasses:\n\t{2}",
@@ -121,6 +127,10 @@ namespace InternetData
         [DataMember]
         public Room office;
 
+        /// <summary>
+        /// Text output format.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return string.Format("Email: {0}\nOffice Phone: {1}\nOffice: {2}", email, officePhone, office);
@@ -136,6 +146,10 @@ namespace InternetData
         [DataMember]
         public string room;
 
+        /// <summary>
+        /// get this as text that you can print.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return string.Format("{0} - {1}", building, room);

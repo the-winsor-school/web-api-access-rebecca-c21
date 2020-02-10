@@ -12,8 +12,18 @@ namespace InternetData
         protected static readonly double longitude = -71.1071909;
         protected static readonly double latitude = 42.340993;
 
-        public static WeatherForcast GetWeatherForcast()
+        /// <summary>
+        /// Gets weather forcast for the given longitude and latitude.
+        /// Default values are replaced by Weather.longitude and Weather.latitude.
+        /// </summary>
+        /// <param name="longitude">default: Weather.longitude</param>
+        /// <param name="latitude">default: Weather.latitude</param>
+        /// <returns></returns>
+        public static WeatherForcast GetWeatherForcast(double longitude = 500, double latitude = 500)
         {
+            if (longitude == 500) longitude = Weather.longitude;
+            if (latitude == 500) latitude = Weather.latitude;
+
             HttpClient client = new HttpClient();
 
             HttpRequestMessage request = new HttpRequestMessage(
@@ -31,6 +41,8 @@ namespace InternetData
 
             return (WeatherForcast)serializer.ReadObject(response.Content.ReadAsStreamAsync().Result);
         }
+
+
     }
 
     [DataContract]
@@ -59,6 +71,15 @@ namespace InternetData
 
         [DataMember]
         public List<WeatherAlert> alerts;
+
+
+        public override string ToString()
+        {
+            return string.Format("{0} {1} - {2}\nHigh:  {3} ({4})\nLow:  {5} ({6})",
+                currently.Time.ToLongDateString(), currently.Time.ToShortTimeString(), currently.summary,
+                daily.data[0].temperatureHigh, daily.data[0].HighTemperatureTime.ToShortTimeString(),
+                daily.data[0].temperatureLow, daily.data[0].LowTemperatureTime.ToShortTimeString());
+        }
     }
 
     [DataContract]
@@ -86,10 +107,10 @@ namespace InternetData
         public string uri;
 
         [IgnoreDataMember]
-        public DateTime Time => new DateTime(time);
+        public DateTime Time => DateTimeOffset.FromUnixTimeSeconds(time).UtcDateTime.AddHours(-5);
 
         [IgnoreDataMember]
-        public DateTime Expires => new DateTime(expires);
+        public DateTime Expires => DateTimeOffset.FromUnixTimeSeconds(expires).UtcDateTime.AddHours(-5);
     }
 
     [DataContract]
@@ -110,6 +131,9 @@ namespace InternetData
     {
         [DataMember(IsRequired = true)]
         public long time;
+
+        [IgnoreDataMember]
+        public DateTime Time => DateTimeOffset.FromUnixTimeSeconds(time).UtcDateTime.AddHours(-5);
 
         [DataMember]
         public string summary;
@@ -169,7 +193,7 @@ namespace InternetData
         public long temperatureHighTime;
 
         [IgnoreDataMember]
-        public DateTime HighTemperatureTime => new DateTime(temperatureHighTime);
+        public DateTime HighTemperatureTime => DateTimeOffset.FromUnixTimeSeconds(temperatureHighTime).UtcDateTime.AddHours(-5);
 
         [DataMember]
         public double temperatureLow;
@@ -178,7 +202,7 @@ namespace InternetData
         public long temperatureLowTime;
 
         [IgnoreDataMember]
-        public DateTime LowTemperatureTime => new DateTime(temperatureLowTime);
+        public DateTime LowTemperatureTime => DateTimeOffset.FromUnixTimeSeconds(temperatureLowTime).UtcDateTime.AddHours(-5);
 
         // There are more things we could add.......
     }

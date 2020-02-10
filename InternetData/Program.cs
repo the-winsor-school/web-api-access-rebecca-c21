@@ -55,9 +55,16 @@ namespace InternetData
 
         public static void Main(string[] args)
         {
+
+            //Example example = Example.LoadExample();
+
+            //Console.WriteLine(example);
+
+            //GetRonSwansonQuotes();
+
             WeatherForcast forcast = Weather.GetWeatherForcast();
 
-            Console.WriteLine(forcast.currently.summary);
+            Console.WriteLine(forcast);
 
             Console.WriteLine("\nDone!");
         }

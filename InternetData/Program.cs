@@ -56,6 +56,11 @@ new HttpRequestMessage(HttpMethod.Get, string.Format("https://datazen.katren.ru/
             Console.WriteLine("\nDone!");
         }
     }
+    //this class represents a boolian, true if its a holiday, false if it isnt, while checking the day
+
+        /// <summary>
+        /// Is today a Russian Holiday?
+        /// </summary>
 
     [DataContract]
     public class RusCalClass
